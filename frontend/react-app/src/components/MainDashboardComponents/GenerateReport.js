@@ -1,12 +1,13 @@
 import React, { useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "../components/ui/card";
-import { Button } from "../components/ui/button";
-import { Input } from "../components/ui/input";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../components/ui/select";
+import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
+import { Button } from "../ui/button";
+import { Input } from "../ui/input";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
 import { Loader2, Plus, Trash2, Download, FileText, Bell, Search, Sun, Moon } from "lucide-react";
-import GenerateReport from "../components/Elements/ReportForm";
+import GenerateReportForm from "../Elements/ReportForm";
+import RecentReports from "./RecentReports";
 
-export default function ReportGenerator() {
+export default function GenerateReport() {
   const [isLoading, setIsLoading] = useState(false);
   const [file, setFile] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
@@ -171,53 +172,13 @@ export default function ReportGenerator() {
       </div>
 
       <div className="w-full rounded-xl shadow-sm p-6 bg-white dark:bg-gray-800">
-        <GenerateReport />
+        <GenerateReportForm />
       </div>
 
-      <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm p-6">
-        <h3 className="text-xl font-semibold mb-4 dark:text-white">Recent Reports</h3>
-        <div className="overflow-x-auto">
-          <table className="w-full">
-            <thead>
-              <tr className="text-left text-sm text-gray-500 dark:text-gray-400 border-b dark:border-gray-700">
-                <th className="pb-4">Date</th>
-                <th className="pb-4">Case ID</th>
-                <th className="pb-4">Report Name</th>
-                <th className="pb-4">Status</th>
-                <th className="pb-4">Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {recentReports.map((report) => (
-                <tr key={report.id} className="border-b dark:border-gray-700 last:border-b-0">
-                  <td className="py-4 dark:text-gray-300">{report.date}</td>
-                  <td className="py-4 dark:text-gray-300">{report.caseId}</td>
-                  <td className="py-4 dark:text-gray-300">{report.reportName}</td>
-                  <td className="py-4">
-                    <StatusBadge status={report.status} />
-                  </td>
-                  <td className="py-4">
-                    <div className="flex space-x-2">
-                      <button
-                        onClick={() => handleAddReport(report.id)}
-                        className="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300"
-                      >
-                        View
-                      </button>
-                      <button
-                        onClick={() => handleDeleteReport(report.id)}
-                        className="text-red-600 dark:text-red-400 hover:text-red-800 dark:hover:text-red-300"
-                      >
-                        Delete
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </div>
+      {/* Recent reports */}
+      <RecentReports/>
+
+     
     </div>
   );
 }

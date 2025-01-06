@@ -6,9 +6,212 @@ import AccountNumNameManager from "../components/CaseDashboardComponents/Account
 import IndividualTable from "../components/CaseDashboardComponents/IndividualTable";
 import CombinedTable from "../components/CaseDashboardComponents/CombinedTable";
 import { useNavigate, useParams } from "react-router-dom";
-import { useBreadcrumb } from '../contexts/BreadcrumbContext';
-import {BreadcrumbDynamic}  from '../components/BreadCrumb';
+import { useBreadcrumb } from "../contexts/BreadcrumbContext";
+import { BreadcrumbDynamic } from "../components/BreadCrumb";
 import { ClipboardPlus, UserPen } from "lucide-react";
+import EntityDistribution from "../components/CaseDashboardComponents/EntityDistribution";
+import NetworkGraph from "../components/CaseDashboardComponents/NetworkGraph";
+import LinkAnalysis from "../components/CaseDashboardComponents/LinkAnalysis";
+import BiDirectionalAnalysis from "../components/CaseDashboardComponents/BiDirectionalAnalysis";
+import FIFOLIFO from "../components/CaseDashboardComponents/FIFOLIFO";
+import FundTracking from "../components/CaseDashboardComponents/FundTracking";
+
+// Dummy data structure matching the expected format
+const dummyResult = {
+  cummalative_df: {
+    bidirectional_analysis: [
+      {
+        "Entity One": "MR AIYAZANWARQURESHI",
+        "Entity Two": "POOJAN VIG",
+        "Total Credit Transactions": "43",
+        "Total Debit Transactions": "38",
+        "Total Credit Amount": "144,211.00",
+        "Total Debit Amount": "133,601.00",
+        "Net Exchange (Credit - Debit)": "10,610.00",
+      },
+      {
+        "Entity One": "POOJAN VIG",
+        "Entity Two": "POOJAN VIG",
+        "Total Credit Transactions": "4",
+        "Total Debit Transactions": "3",
+        "Total Credit Amount": "20,791.00",
+        "Total Debit Amount": "19,088.00",
+        "Net Exchange (Credit - Debit)": "1,703.00",
+      },
+      {
+        "Entity One": "POOJAN VIG",
+        "Entity Two": "aartisunilhinduja",
+        "Total Credit Transactions": "2",
+        "Total Debit Transactions": "0",
+        "Total Credit Amount": "686.00",
+        "Total Debit Amount": "0.00",
+        "Net Exchange (Credit - Debit)": "686.00",
+      },
+      {
+        "Entity One": "MR AIYAZANWARQURESHI",
+        "Entity Two": "MR AIYAZANWARQURESHI",
+        "Total Credit Transactions": "52",
+        "Total Debit Transactions": "40",
+        "Total Credit Amount": "149,624.00",
+        "Total Debit Amount": "146,283.00",
+        "Net Exchange (Credit - Debit)": "3,341.00",
+      },
+    ],
+    entity_df: [
+      { Entity: "MR AIYAZANWARQURESHI" },
+      { Entity: "POOJAN VIG" },
+      { Entity: "aartisunilhinduja" },
+    ],
+  },
+};
+
+const dummyData = {
+  "Utilization of Credit (10000) received by Gamma from Alpha on 2024-04-03": {
+    LIFO: {
+      data: [
+        {
+          "Value Date": "2024-04-01",
+          Name: "Alpha",
+          Description: "Opening Balance",
+          Debit: 0,
+          Credit: 0,
+          Entity: "Alpha",
+        },
+      ],
+    },
+    FIFO: {
+      data: [
+        {
+          "Value Date": "2024-04-03",
+          Name: "Gamma",
+          Description: "Credit from Alpha",
+          Debit: 0,
+          Credit: 10000,
+          Entity: "Alpha",
+          "Utilized Credit": 0,
+          "Remaining Credit": 10000,
+        },
+        {
+          "Value Date": "2024-04-04",
+          Name: "Gamma",
+          Description: "Transfer to Beta",
+          Debit: 2000,
+          Credit: 0,
+          Entity: "Beta",
+          "Utilized Credit": 2000,
+          "Remaining Credit": 8000,
+        },
+        {
+          "Value Date": "2024-04-05",
+          Name: "Gamma",
+          Description: "Payment to Vendor",
+          Debit: 1500,
+          Credit: 0,
+          Entity: "TechCorp",
+          "Utilized Credit": 3500,
+          "Remaining Credit": 6500,
+        },
+      ],
+    },
+  },
+  "Utilization of Credit (5000) received by Beta from Delta on 2024-04-02": {
+    LIFO: {
+      data: [
+        {
+          "Value Date": "2024-04-02",
+          Name: "Delta",
+          Description: "Initial Credit",
+          Debit: 0,
+          Credit: 5000,
+          Entity: "Delta",
+        },
+      ],
+    },
+    FIFO: {
+      data: [
+        {
+          "Value Date": "2024-04-02",
+          Name: "Beta",
+          Description: "Credit from Delta",
+          Debit: 0,
+          Credit: 5000,
+          Entity: "Delta",
+          "Utilized Credit": 0,
+          "Remaining Credit": 5000,
+        },
+        {
+          "Value Date": "2024-04-03",
+          Name: "Beta",
+          Description: "Payment to Supplier",
+          Debit: 3000,
+          Credit: 0,
+          Entity: "SupplyInc",
+          "Utilized Credit": 3000,
+          "Remaining Credit": 2000,
+        },
+        {
+          "Value Date": "2024-04-04",
+          Name: "Beta",
+          Description: "Transfer to Alpha",
+          Debit: 1000,
+          Credit: 0,
+          Entity: "Alpha",
+          "Utilized Credit": 4000,
+          "Remaining Credit": 1000,
+        },
+      ],
+    },
+  },
+  "Utilization of Credit (8000) received by Alpha from TechCorp on 2024-04-05":
+    {
+      LIFO: {
+        data: [
+          {
+            "Value Date": "2024-04-05",
+            Name: "TechCorp",
+            Description: "Credit Extension",
+            Debit: 0,
+            Credit: 8000,
+            Entity: "TechCorp",
+          },
+        ],
+      },
+      FIFO: {
+        data: [
+          {
+            "Value Date": "2024-04-05",
+            Name: "Alpha",
+            Description: "Credit from TechCorp",
+            Debit: 0,
+            Credit: 8000,
+            Entity: "TechCorp",
+            "Utilized Credit": 0,
+            "Remaining Credit": 8000,
+          },
+          {
+            "Value Date": "2024-04-06",
+            Name: "Alpha",
+            Description: "Transfer to Beta",
+            Debit: 4000,
+            Credit: 0,
+            Entity: "Beta",
+            "Utilized Credit": 4000,
+            "Remaining Credit": 4000,
+          },
+          {
+            "Value Date": "2024-04-07",
+            Name: "Alpha",
+            Description: "Payment to Delta",
+            Debit: 2000,
+            Credit: 0,
+            Entity: "Delta",
+            "Utilized Credit": 6000,
+            "Remaining Credit": 2000,
+          },
+        ],
+      },
+    },
+};
 
 const CaseDashboard = () => {
   const { breadcrumbs, setCaseDashboard } = useBreadcrumb();
@@ -24,13 +227,13 @@ const CaseDashboard = () => {
     {
       title: "Acc No and Acc Name",
       url: "#",
-      icon: UserPen  ,
+      icon: UserPen,
       isActive: true,
     },
     {
       title: "Reports",
       url: "#",
-      icon: ClipboardPlus ,
+      icon: ClipboardPlus,
       items: [
         {
           title: "Individual Table",
@@ -44,6 +247,37 @@ const CaseDashboard = () => {
         },
       ],
       alwaysOpen: true,
+    },
+    {
+      title: "Network Graph",
+      url: "#",
+      icon: null,
+    },
+    {
+      title: "Entity Distribution",
+      url: "#",
+      icon: null,
+    },
+    
+    {
+      title: "Link Analysis",
+      url: "#",
+      icon: null,
+    },
+    {
+      title: "Bi-Directional Analysis",
+      url: "#",
+      icon: null,
+    },
+    {
+      title: "FIFO LIFO",
+      url: "#",
+      icon: null,
+    },
+    {
+      title: "Fund Tracking",
+      url: "#",
+      icon: null,
     },
   ];
 
@@ -83,6 +317,14 @@ const CaseDashboard = () => {
               {activeTab === "Acc No and Acc Name" && <AccountNumNameManager />}
               {activeTab === "Individual Table" && <IndividualTable />}
               {activeTab === "Combined Table" && <CombinedTable />}
+              {activeTab === "Entity Distribution" && <EntityDistribution />}
+              {activeTab === "Network Graph" && <NetworkGraph />}
+              {activeTab === "Link Analysis" && <LinkAnalysis />}
+              {activeTab === "Bi-Directional Analysis" && (
+                <BiDirectionalAnalysis />
+              )}
+              {activeTab === "FIFO LIFO" && <FIFOLIFO />}
+              {activeTab === "Fund Tracking" && <FundTracking />}
             </main>
           </div>
         </ScrollArea>

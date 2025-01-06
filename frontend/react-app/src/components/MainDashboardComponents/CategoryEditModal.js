@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import { Button } from "../../components/ui/button";
+import { Button } from "../ui/button";
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "../../components/ui/dialog";
+} from "../ui/dialog";
 // import {
 //   Table,
 //   TableBody,
@@ -15,14 +15,14 @@ import {
 //   TableHeader,
 //   TableRow,
 // } from "../../components/ui/table";
-import CategoryEditTable from "../MainDashboardComponents/CategoryEditTable"
+import CategoryEditTable from "./CategoryEditTable"
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "../../components/ui/select";
+} from "../ui/select";
 
 const CategoryEditModal = ({ open, onOpenChange }) => {
   // Sample data - replace with your actual data

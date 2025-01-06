@@ -73,7 +73,7 @@ const Analytics = () => {
                         size="sm"
                         className="hover:bg-primary hover:text-primary-foreground transition-colors"
                       >
-                        <Download className="h-4 w-4 mr-2" />
+                            <Download className="h-4 w-4 mr-2" />
                         Download
                       </Button>
                     </div>

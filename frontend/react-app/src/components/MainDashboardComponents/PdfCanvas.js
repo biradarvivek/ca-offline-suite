@@ -3,7 +3,7 @@ import { Button } from "../ui/button";
 import { Card, CardHeader, CardTitle, CardContent, CardDescription } from "../ui/card";
 import { Alert, AlertDescription } from "../ui/alert";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
-import { X, ZoomIn, ZoomOut, ChevronLeft, ChevronRight, Upload, Trash2 } from "lucide-react";
+import {  ZoomIn, ZoomOut, ChevronLeft, ChevronRight, Upload, Trash2 } from "lucide-react";
 import { pdfjs, Document, Page } from 'react-pdf';
 import { Tooltip } from "../ui/tooltip";
 
@@ -48,7 +48,7 @@ const PDFColumnMarker = () => {
   const [editingColumnId, setEditingColumnId] = useState(null);
   const [isResizing, setIsResizing] = useState(false);
   const [dragStartX, setDragStartX] = useState(null);
-  const [draggedColumn, setDraggedColumn] = useState(null);
+  // const [draggedColumn, setDraggedColumn] = useState(null);
   const [resizeEdge, setResizeEdge] = useState(null); // 'left' or 'right'
 
   const pdfContainerRef = useRef(null);

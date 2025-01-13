@@ -19,7 +19,7 @@ import Eligibility from "../components/MainDashboardComponents/Eligibility";
 import Billing from "../components/MainDashboardComponents/Billing";
 import { Toaster } from "../components/ui/toaster";
 import Analytics from "../components/MainDashboardComponents/Analytics";
-import ExcelViewer from "../components/MainDashboardComponents/TallyVoucher";
+import ExcelViewer from "../components/ImortTally/TallyPrime";
 import ExcelERP from '../components/ImortTally/TallyERP'; 
 import { BreadcrumbDynamic } from "../components/BreadCrumb";
 import { useBreadcrumb } from "../contexts/BreadcrumbContext";
@@ -44,7 +44,7 @@ const Dashboard = () => {
       icon: FilePlus2,
     },
     {
-      title: "Analytics",
+      title: "Reports",
       url: "#",
       icon: ChartNoAxesCombined,
     },
@@ -76,11 +76,11 @@ const Dashboard = () => {
       url: "#",
       icon: ReceiptText,
     },
-    // {
-    //   title:"Marker",
-    //   url:"#",
-    //   icon:Files
-    // }
+    {
+      title:"Marker",
+      url:"#",
+      icon:Files
+    }
   ];
 
   useEffect(() => {
@@ -120,7 +120,7 @@ const Dashboard = () => {
               {activeTab === "Opportunity to Earn" && <Eligibility />}
               {activeTab === "Billing" && <Billing />}
 
-              {activeTab === "Analytics" && <Analytics />}
+              {activeTab === "Reports" && <Analytics />}
               {activeTab === "Marker" && <PdfColumnMarker />}
               {/* {activeTab === "Import to Tally" && <ImportToTally />} */}
               {activeTab === "TallyPrime" && <ExcelViewer />}

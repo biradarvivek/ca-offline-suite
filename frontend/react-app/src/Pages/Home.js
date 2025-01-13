@@ -48,39 +48,39 @@ const Dashboard = () => {
       url: "#",
       icon: ChartNoAxesCombined,
     },
-    {
-      title: "Import to Tally",
-      url: "#",
-      icon: Import,
-      items: [
-        {
-          title: "TallyPrime",
-          url: "#",
-          icon: null,
-        },
-        {
-          title: "TallyERP",
-          url: "#",
-          icon: null,
-        },
-      ],
-      alwaysOpen: true, // Ensures the section remains open
-    },
-    {
-      title: "Opportunity to Earn",
-      url: "#",
-      icon: IndianRupee,
-    },
+    // {
+    //   title: "Import to Tally",
+    //   url: "#",
+    //   icon: Import,
+    //   items: [
+    //     {
+    //       title: "TallyPrime",
+    //       url: "#",
+    //       icon: null,
+    //     },
+    //     {
+    //       title: "TallyERP",
+    //       url: "#",
+    //       icon: null,
+    //     },
+    //   ],
+    //   alwaysOpen: true, // Ensures the section remains open
+    // },
+    // {
+    //   title: "Opportunity to Earn",
+    //   url: "#",
+    //   icon: IndianRupee,
+    // },
     {
       title: "Billing",
       url: "#",
       icon: ReceiptText,
     },
-    {
-      title:"Marker",
-      url:"#",
-      icon:Files
-    }
+    // {
+    //   title:"Marker",
+    //   url:"#",
+    //   icon:Files
+    // }
   ];
 
   useEffect(() => {

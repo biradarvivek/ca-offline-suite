@@ -17,6 +17,7 @@ import {
 import { useNavigate } from 'react-router-dom';
 import { ChevronLeft } from "lucide-react";
 import { Button } from "../components/ui/button";
+import { useLocation, matchPath } from 'react-router-dom';
 
 
 export function BreadcrumbDynamic({ items, className = "py-4 px-8" }) {

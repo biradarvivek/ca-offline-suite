@@ -27,7 +27,7 @@ const GenerateReportForm = () => {
   const [isDragging, setIsDragging] = useState(false);
   const fileInputRef = useRef(null);
   const caseIdRef = useRef(null);
-  const [forAts, setForAts] = useState(false);
+  const [forAts, setForAts] = useState(true);
   const [loading, setLoading] = useState(false);
   const { toast } = useToast();
   const [progress, setProgress] = useState(0);
@@ -281,10 +281,9 @@ const GenerateReportForm = () => {
       });
     } finally {
       setLoading(false);
-      setTimeout(() => {
-        setProgress(0);
-        setToastId(null);
-      }, 3000);
+      setProgress(0);
+      setToastId(null);
+     
     }
   };
   const formatFileSize = (bytes) => {

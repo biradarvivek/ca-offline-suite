@@ -18,37 +18,36 @@
 //         LicenseManager.instance = this; // Set the singleton instance
 //     }
 
-//     static async getInstance() {
-//         if (!LicenseManager.instance) {
-//             const instance = new LicenseManager();
-//             await instance.initialize();  // Wait for initialization
-//         }
-//         return LicenseManager.instance;
-//     }
+    static getInstance() {
+        if (!LicenseManager.instance) {
+            LicenseManager.instance = new LicenseManager();
+        }
+        return LicenseManager.instance;
+    }
 
-//     // Initialize method to check for existing license key
-//     async initialize() {
-//         try {
-//             const licenseKey = await keytar.getPassword(SERVICE_NAME, LICENSE_KEY_ACCOUNT);
-//             this.isActivated = !!licenseKey;
-//             console.log('Init isActivated:', this.isActivated);
-//             return this.isActivated;
-//         } catch (error) {
-//             console.error('License check failed:', error);
-//             return false;
-//         }
-//     }
+    // Initialize method to check for existing license key
+    async init() {
+        try {
+            const licenseKey = await keytar.getPassword(SERVICE_NAME, LICENSE_KEY_ACCOUNT);
+            this.isActivated = !!licenseKey;
+            console.log('Init isActivated:', this.isActivated);
+            return this.isActivated;
+        } catch (error) {
+            console.error('License check failed:', error);
+            return false;
+        }
+    }
 
 //     // Method to validate and store license key
 //     async validateAndStoreLicense(credentials) {
 //         try {
 //             const isValid = await this.validateLicense(credentials.licenseKey, credentials.username);
 
-//             if (isValid) {
-//                 await keytar.setPassword(SERVICE_NAME, LICENSE_KEY_ACCOUNT, licenseKey);
-//                 this.isActivated = true;
-//                 return { success: true };
-//             }
+            if (isValid) {
+                // await keytar.setPassword(SERVICE_NAME, LICENSE_KEY_ACCOUNT, licenseKey);
+                this.isActivated = true;
+                return { success: true };
+            }
 
 //             return {
 //                 success: false,
@@ -67,24 +66,27 @@
 //         try {
 //             const timestamp = Date.now();
 
-//             const apiKey = 'your-api-key';
+            const apiKey = 'U08fir-OsEXdgMZKARdgz5oPvyRT6cIZioOeV_kZdLMeXsAc46_x.CAgICAgICAo=';
 
-//             const response = await axios.post(API_URL, {
-//                 username,
-//                 license_key: licenseKey,
-//                 timestamp,
-//             }, {
-//                 headers: {
-//                     'X-API-Key': apiKey,
-//                 }
-//             });
+            const response = await axios.post(API_URL, {
+                username,
+                license_key: licenseKey,
+                timestamp,
+            }, {
+                headers: {
+                    'X-API-Key': apiKey,
+                }
+            });
+            
+            console.log("Response : ", response);
+            const { data } = response;
 
-//             const { data } = response;
+            console.log("Data : ", data);
 
-//             // Handle successful response
-//             if (response.status === 'OK') {
-//                 const expiryTimestamp = data.expiry_timestamp;
-//                 const currentTimestamp = Date.now() / 1000;
+            // Handle successful response
+            if (response.status === 200) {
+                const expiryTimestamp = data.expiry_timestamp;
+                const currentTimestamp = Date.now() / 1000;
 
 //                 // Check if the license has expired
 //                 if (currentTimestamp > expiryTimestamp) {
@@ -119,6 +121,6 @@
 //     }
 // }
 
-// // Export a single instance of the LicenseManager
+// Export a single instance of the LicenseManager
 // const licenseManager = new LicenseManager().getInstance();
-// module.exports = licenseManager;
+module.exports = LicenseManager.getInstance();

@@ -9,6 +9,7 @@ const { registerCaseDashboardIpc } = require("./ipc/caseDashboard.js");
 const { registerReportHandlers } = require("./ipc/reportHandlers.js");
 const { registerAuthHandlers } = require("./ipc/authHandlers.js");
 const sessionManager = require("./SessionManager");
+const licenseManager = require('./LicenseManager');
 
 console.log("Working Directory:", process.cwd());
 
@@ -102,7 +103,20 @@ app.setName("CypherSol Dev");
 app.whenReady().then(async () => {
   console.log("App is ready", app.getPath("userData"));
   try {
-    await sessionManager.init();
+    try{
+      await sessionManager.init();
+    }
+    catch(error){
+      console.log("SessionManager initialization failed:", error);
+    }
+
+    try{
+      await licenseManager.init();
+    }
+    catch(error){
+      console.log("LicenseManager initialization failed:", error);
+    }
+
 
     // Proceed with the window creation and other tasks after initialization
     createProtocol();
@@ -114,7 +128,7 @@ app.whenReady().then(async () => {
     //   console.error("User creation error:", dbError);
     // }
   } catch (error) {
-    console.error("Failed to initialize SessionManager:", error);
+    console.error("Failed to initialize App:", error);
     // Optionally handle the error, e.g., show an error dialog or quit the app
     app.quit();
   }
